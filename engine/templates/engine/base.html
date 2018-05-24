@@ -1,0 +1,48 @@
+{% load staticfiles %}
+<html lang="ru">
+	<head>
+		<title>TVs and Fridges</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	</head>
+
+    <script>
+        var tokens = {
+          csrf_token : "{{ csrf_token }}"
+        };
+    </script>
+
+	<body>
+
+    <a href="{% url 'main_page' %}">Main</a> |
+    <a href="{% url 'products_list' category="fridge" %}">Fridges</a> |
+    <a href="{% url 'products_list' category="tv" %}">TVs</a>
+
+    <br><br>
+    {% if category %}
+        {% if category == "fridge" %}
+            All list of fridges
+        {% else %}
+            All list of {{ category }}
+        {% endif %}
+        | Sort by <a href="?order_by_clicks=most">most</a> or <a href="?order_by_clicks=least">least</a> clicks
+    {% endif %}
+    <div class="products">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="product-detail"></div>
+      </div>
+    </div>
+
+	</body>
+    <script src="{% static 'js/main.js' %}"></script>
+</html>

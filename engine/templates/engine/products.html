@@ -1,0 +1,11 @@
+{% extends "engine/base.html" %}
+
+{% block content %}
+    {% for product in products %}
+        <a class="product" id="myBtn" onclick="get_product_details({{ product.pk }})">
+            {% if product.img %}<img class="img" src="{{ product.img }}">{% endif %}
+            <div class="name">{{ product.name|truncatechars:64|title }}</div>
+            <div class="category">{{ product.category.name }}</div>
+        </a>
+    {% endfor %}
+{% endblock %}
