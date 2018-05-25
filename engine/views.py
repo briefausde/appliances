@@ -19,8 +19,10 @@ class ProductDetailView(generic.TemplateView):
 
     def post(self, *args, **kwargs):
         product = self.get_object()
+        clicks = product.clicks + 1
         product.update_clicks()
-        return TemplateResponse(self.request, self.template_name, {'product': product})
+        return TemplateResponse(self.request, self.template_name, {'product': product, 'clicks': clicks})
+    # return this data in json
 
     def get(self, *args, **kwargs):
         return redirect('/')
@@ -37,12 +39,12 @@ class ProductsListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductsListView, self).get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
-        context['label'] = "All list of {0}S".format(self.kwargs['category'].upper())
+        if self.request.GET.get('order_by_clicks'):
+            context['sorted'] = self.request.GET.get('order_by_clicks')
         return context
 
     def get_queryset(self):
-        order_by_clicks = self.request.GET.get('order_by_clicks')
-        if order_by_clicks:
+        if self.request.GET.get('order_by_clicks'):
             return self.model.objects.filter(category__name=self.kwargs['category']).order_by(
-                '-clicks' if order_by_clicks == "most" else 'clicks')
+                '-clicks' if self.request.GET.get('order_by_clicks') == "most" else 'clicks')
         return self.model.objects.filter(category__name=self.kwargs['category']).order_by('-pk')
