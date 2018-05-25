@@ -1,48 +1,88 @@
 {% load staticfiles %}
-<html lang="ru">
-	<head>
-		<title>TVs and Fridges</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  		<link rel="stylesheet" href="{% static 'css/main.css' %}">
-	</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+    .w3-bar-block .w3-bar-item {padding:20px}
+    </style>
 
+    <title>TVs and Fridges</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script>
         var tokens = {
           csrf_token : "{{ csrf_token }}"
         };
     </script>
 
-	<body>
+</head>
+<body>
 
-    <a href="{% url 'main_page' %}">Main</a> |
-    <a href="{% url 'products_list' category="fridge" %}">Fridges</a> |
-    <a href="{% url 'products_list' category="tv" %}">TVs</a>
 
-    <br><br>
-    {% if category %}
-        {% if category == "fridge" %}
-            All list of fridges
-        {% else %}
-            All list of {{ category }}
-        {% endif %}
-        | Sort by <a href="?order_by_clicks=most">most</a> or <a href="?order_by_clicks=least">least</a> clicks
-    {% endif %}
-    <div class="products">
+<div class="w3-bar w3-blue">
+    <a class="w3-bar-item w3-button w3-mobile" href="{% url 'main_page' %}">Main</a>
+    <a class="w3-bar-item w3-button w3-mobile" href="{% url 'products_list' category="fridge" %}">Fridges</a>
+    <a class="w3-bar-item w3-button w3-mobile" href="{% url 'products_list' category="tv" %}">TVs</a>
+</div>
+
+<div class="label" style="text-align: center; margin-top: 50px">
+<h1>{% if label %}{{ label }}{% else %}TVs and Fridges{% endif %}</h1>
+{% if category %}
+  <h3 class="margin">Sort by <a href="?order_by_clicks=most">most</a> or <a href="?order_by_clicks=least">least</a> clicks</h3>
+{% endif %}
+</div>
+
+<div class="w3-main w3-content w3-padding" style="max-width:1200px">
+    <div class="w3-row-padding w3-padding-16 w3-center">
         {% block content %}
         {% endblock %}
     </div>
+</div>
 
 
-
-    <div id="myModal" class="modal">
+<div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <div id="product-detail"></div>
       </div>
     </div>
 
-	</body>
-    <script src="{% static 'js/main.js' %}"></script>
+{#<div class="w3-row-padding w3-margin-top">#}
+{#    <div class="w3-third">#}
+{#<div class="w3-card-4 test" style="width:92%;max-width:300px;">#}
+{#  <img src="img_avatar3.png" alt="Avatar" style="width:100%;opacity:0.85">#}
+{#  <div class="w3-container">#}
+{#  <h4><b>John</b></h4>#}
+{#  <p>Architect and engineer</p>#}
+{#  </div>#}
+{#</div>#}
+{#        </div>#}
+{#    <div class="w3-third">#}
+{#<div class="w3-card-4 test" style="width:92%;max-width:300px;">#}
+{#  <img src="img_avatar3.png" alt="Avatar" style="width:100%;opacity:0.85">#}
+{#  <div class="w3-container">#}
+{#  <h4><b>John</b></h4>#}
+{#  <p>Architect and engineer</p>#}
+{#  </div>#}
+{#</div>#}
+{#    </div>#}
+{#    <div class="w3-third">#}
+{#<div class="w3-card-4 test" style="width:92%;max-width:300px;">#}
+{#  <img src="img_avatar3.png" alt="Avatar" style="width:100%;opacity:0.85">#}
+{#  <div class="w3-container">#}
+{#  <h4><b>John</b></h4>#}
+{#  <p>Architect and engineer</p>#}
+{#  </div>#}
+{#</div>#}
+{#    </div>#}
+{#</div>#}
+
+
+</body>
+<script src="{% static 'js/main.js' %}"></script>
 </html>

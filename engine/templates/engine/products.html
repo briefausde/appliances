@@ -2,10 +2,10 @@
 
 {% block content %}
     {% for product in products %}
-        <a class="product" id="myBtn" onclick="get_product_details({{ product.pk }})">
-            {% if product.img %}<img class="img" src="{{ product.img }}">{% endif %}
-            <div class="name">{{ product.name|truncatechars:64|title }}</div>
-            <div class="category">{{ product.category.name }}</div>
+        <a class="w3-quarter" id="myBtn" onclick="get_product_details({{ product.pk }})" style="margin-top:100px">
+            <img src="{{ product.img }}" class="w3-border w3-border-blue w3-hover-border-green" alt="Sandwich" style="width:100%;height:272px">
+            <p><span class="w3-tag w3-blue">{{ product.category.name|upper }}</span></p>
+            <p class="w3-bottombar">{{ product.name|truncatechars:64|title }}</p>
         </a>
     {% endfor %}
 {% endblock %}

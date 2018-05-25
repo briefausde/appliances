@@ -1,8 +1,6 @@
 {% if product.img %}<img class="img" src="{{ product.img }}" style="width:250px;height:250px">{% endif %}
-<div class="name">{{ product.category.name }}: {{ product.name }}</div>
+<div class="name">{{ product.category.name|upper }}: {{ product.name|title }}</div>
 <div class="description">Description: {{ product.description }}</div>
 <br>
 <div class="price">Price: {{ product.price }}</div>
-<div class="clicks">Clicks: {{ product.clicks }}</div>
-<div class="created_date">Created date: {{ product.created_date|timesince }}</div>
-
+<div class="created_date">Created date: {{ product.created_date|timesince }} ago</div>

@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.views import generic
-from engine.models import Product
+from .models import Product
 
 
 class MainPageView(generic.ListView):
@@ -37,6 +37,7 @@ class ProductsListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductsListView, self).get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
+        context['label'] = "All list of {0}S".format(self.kwargs['category'].upper())
         return context
 
     def get_queryset(self):
