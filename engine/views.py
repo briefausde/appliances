@@ -1,8 +1,7 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views import generic
 from .models import Product
-import json
 
 
 class MainPageView(generic.ListView):
@@ -21,6 +20,7 @@ class ProductDetailView(generic.View):
         product = self.get_object()
         clicks = product.clicks + 1
         product.update_clicks()
+
         data = {
             'product_img': product.img,
             'product_category': product.category.name.upper(),
@@ -31,7 +31,8 @@ class ProductDetailView(generic.View):
             'product_created_date': "{}-{}-{}".format(
                 product.created_date.year, product.created_date.month, product.created_date.day)
         }
-        return HttpResponse(json.dumps(data), content_type='application/json')
+
+        return JsonResponse(data)
 
     def get(self, *args, **kwargs):
         return redirect('/')
@@ -48,8 +49,10 @@ class ProductsListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductsListView, self).get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
+
         if self.request.GET.get('order_by_clicks'):
             context['sorted'] = self.request.GET.get('order_by_clicks')
+
         return context
 
     def get_queryset(self):
