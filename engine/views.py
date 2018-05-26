@@ -1,7 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.views import generic
 from .models import Product
+import json
 
 
 class MainPageView(generic.ListView):
@@ -13,16 +15,23 @@ class MainPageView(generic.ListView):
         return self.model.objects.all().order_by('-pk')
 
 
-class ProductDetailView(generic.TemplateView):
+class ProductDetailView(generic.View):
     model = Product
-    template_name = 'engine/product.html'
 
     def post(self, *args, **kwargs):
         product = self.get_object()
         clicks = product.clicks + 1
         product.update_clicks()
-        return TemplateResponse(self.request, self.template_name, {'product': product, 'clicks': clicks})
-    # return this data in json
+        data = {
+            'product_img': product.img,
+            'product_category': product.category.name.upper(),
+            'product_name': product.name.title(),
+            'product_description': product.description,
+            'product_price': product.price,
+            'product_clicks': clicks,
+            'product_created_date': product.created_date
+        }
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
     def get(self, *args, **kwargs):
         return redirect('/')

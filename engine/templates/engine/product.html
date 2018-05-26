@@ -1,6 +1,0 @@
-{% if product.img %}<img src="{{ product.img }}" style="width:250px;height:250px">{% endif %}<br>
-<span class="w3-tag w3-blue">{{ product.category.name|upper }}</span> {{ product.name|title }}<br>
-Description: {{ product.description|truncatechars:300 }}<br>
-Price: {{ product.price }} $<br>
-Clicks: {{ clicks }}<br>
-Created date: {{ product.created_date|timesince }} ago<br>
