@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 from django.views import generic
 from .models import Product
 import json
@@ -29,7 +28,8 @@ class ProductDetailView(generic.View):
             'product_description': product.description,
             'product_price': product.price,
             'product_clicks': clicks,
-            'product_created_date': product.created_date
+            'product_created_date': "{}-{}-{}".format(
+                product.created_date.year, product.created_date.month, product.created_date.day)
         }
         return HttpResponse(json.dumps(data), content_type='application/json')
 

@@ -6,7 +6,7 @@ function get_product_details(pk){
             csrfmiddlewaretoken: tokens.csrf_token
         },
         success: function(product){
-            $('#modal-img').html(product.product_img);
+            $("#modal-img").attr("src", product.product_img);
             $('#modal-category').html(product.product_category);
             $('#modal-name').html(product.product_name);
             $('#modal-description').html(product.product_description);
