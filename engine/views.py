@@ -58,7 +58,7 @@ class ProductsListView(generic.ListView):
 
     def get_ordering(self):
         ordering = self.request.GET.get('order_by_clicks', '-pk')
-        if ordering == "mose":
+        if ordering == "most":
             ordering = '-clicks'
         elif ordering == "least":
             ordering = 'clicks'

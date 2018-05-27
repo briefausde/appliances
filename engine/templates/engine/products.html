@@ -18,7 +18,9 @@
 
     {% if sorted %}
         <div class="sorted-label">
-            <a href='?'>Now products sorted by {{ sorted|upper }} clicks. Click here for sort by date.</a>
+            <a href='{% url "products_list" category=category %}'>
+                Now products sorted by {{ sorted|upper }} clicks. Click here for sort by date.
+            </a>
         </div>
     {% endif %}
 
