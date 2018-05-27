@@ -9,11 +9,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:300,400,700">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
-<script>
-    var tokens = {
-        csrf_token : "{{ csrf_token }}"
-    };
-</script>
 <body>
 
 <div class="w3-bar w3-blue">
@@ -22,45 +17,10 @@
     <a class="w3-bar-item w3-button w3-mobile" href="{% url 'products_list' category="tv" %}">TVs</a>
 </div>
 
-<div class="label" style="text-align: center; margin-top: 50px">
-    <h1>
-        {% if category %}
-            All list of {{ category|upper }}s
-        {% else %}
-            TVs and Fridges
-        {% endif %}
-    </h1>
-    {% if category %}
-        <h3 class="margin">
-            Sort by <a href="?order_by_clicks=most">most</a> or <a href="?order_by_clicks=least">least</a> clicks
-        </h3>
-    {% endif %}
-</div>
+{% block content %}
+{% endblock %}
 
-{% if sorted %}
-    <div class="sorted-label">
-        <a href='?'>Now products sorted by {{ sorted|upper }} clicks. Click here for sort by date.</a>
-    </div>
-{% endif %}
-
-<div class="w3-main w3-content w3-padding" style="max-width:1200px">
-    <div class="w3-row-padding w3-padding-16 w3-center">
-        {% block content %}
-        {% endblock %}
-    </div>
-</div>
-
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <img id="modal-img" src="" style="width:250px;height:250px;display: inline"><br><br>
-        <span class="w3-tag w3-blue"><p id="modal-category" style="display: inline"></p></span> <p id="modal-name" style="display: inline"></p><br>
-        Description: <p id="modal-description" style="display: inline"></p><br>
-        Price: <p id="modal-price" style="display: inline"></p> $<br>
-        Clicks: <p id="modal-clicks" style="display: inline"></p><br>
-        Created date: <p id="modal-created-date" style="display: inline"></p><br>
-    </div>
-</div>
+{% include 'engine/modal-window.html' %}
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

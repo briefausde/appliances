@@ -1,10 +1,7 @@
 function get_product_details(pk){
     $.ajax({
         url: "/product/" + pk + "/",
-        type: 'POST',
-        data: {
-            csrfmiddlewaretoken: tokens.csrf_token
-        },
+        type: 'GET',
         success: function(product){
             $("#modal-img").attr("src", product.product_img);
             $('#modal-category').html(product.product_category);

@@ -23,10 +23,6 @@ class Product(models.Model):
     clicks = models.IntegerField(default=0)
     created_date = models.DateTimeField(default=timezone.now)
 
-    def update_clicks(self):
-        self.clicks = F('clicks') + 1
-        self.save()
-
     def __str__(self):
         return self.name
 

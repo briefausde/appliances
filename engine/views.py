@@ -16,10 +16,10 @@ class MainPageView(generic.ListView):
 class ProductDetailView(generic.View):
     model = Product
 
-    def post(self, *args, **kwargs):
+    def get(self, *args, **kwargs):
         product = self.get_object()
-        clicks = product.clicks + 1
-        product.update_clicks()
+        product.clicks += 1
+        product.save()
 
         data = {
             'product_img': product.img,
@@ -27,15 +27,12 @@ class ProductDetailView(generic.View):
             'product_name': product.name.title(),
             'product_description': product.description,
             'product_price': product.price,
-            'product_clicks': clicks,
+            'product_clicks': product.clicks,
             'product_created_date': "{}-{}-{}".format(
                 product.created_date.year, product.created_date.month, product.created_date.day)
         }
 
         return JsonResponse(data)
-
-    def get(self, *args, **kwargs):
-        return redirect('/')
 
     def get_object(self):
         return self.model.objects.get(pk=self.kwargs['pk'])
@@ -45,18 +42,23 @@ class ProductsListView(generic.ListView):
     model = Product
     context_object_name = 'products'
     template_name = 'engine/products.html'
+    ordering = ['-pk']
 
     def get_context_data(self, **kwargs):
         context = super(ProductsListView, self).get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
 
-        if self.request.GET.get('order_by_clicks'):
-            context['sorted'] = self.request.GET.get('order_by_clicks')
+        context['sorted'] = self.get_ordering()
 
         return context
 
     def get_queryset(self):
-        if self.request.GET.get('order_by_clicks'):
-            return self.model.objects.filter(category__name=self.kwargs['category']).order_by(
-                '-clicks' if self.request.GET.get('order_by_clicks') == "most" else 'clicks')
-        return self.model.objects.filter(category__name=self.kwargs['category']).order_by('-pk')
+        return self.model.objects.filter(category__name=self.kwargs['category']).order_by(self.get_ordering())
+
+    def get_ordering(self):
+        ordering = self.GET.get('order_by_clicks', '-pk')
+        if ordering == "more":
+            ordering = '-clicks'
+        if ordering == "least":
+            ordering = 'clicks'
+        return ordering
