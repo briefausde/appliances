@@ -46,8 +46,8 @@ class ProductsListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductsListView, self).get_context_data(**kwargs)
-        context['category'] = self.kwargs['category']
 
+        context['category'] = self.kwargs['category']
         context['sorted'] = self.get_ordering()
 
         return context
@@ -56,9 +56,9 @@ class ProductsListView(generic.ListView):
         return self.model.objects.filter(category__name=self.kwargs['category']).order_by(self.get_ordering())
 
     def get_ordering(self):
-        ordering = self.GET.get('order_by_clicks', '-pk')
+        ordering = self.request.GET.get('order_by_clicks', '-pk')
         if ordering == "more":
             ordering = '-clicks'
-        if ordering == "least":
+        elif ordering == "least":
             ordering = 'clicks'
         return ordering
