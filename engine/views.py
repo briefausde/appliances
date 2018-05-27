@@ -48,7 +48,8 @@ class ProductsListView(generic.ListView):
         context = super(ProductsListView, self).get_context_data(**kwargs)
 
         context['category'] = self.kwargs['category']
-        context['sorted'] = self.get_ordering()
+        if self.get_ordering() != "-pk":
+            context['sorted'] = self.get_ordering()
 
         return context
 
@@ -57,7 +58,7 @@ class ProductsListView(generic.ListView):
 
     def get_ordering(self):
         ordering = self.request.GET.get('order_by_clicks', '-pk')
-        if ordering == "more":
+        if ordering == "mose":
             ordering = '-clicks'
         elif ordering == "least":
             ordering = 'clicks'
