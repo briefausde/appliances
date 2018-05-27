@@ -25,7 +25,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'demo-appliances.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'demo-appliances.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -78,11 +78,6 @@ WSGI_APPLICATION = 'appliances.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'appliances',
-        'USER': 'admin',
-        'PASSWORD': 'gfhjkm123',
-        'HOST': 'localhost',
-        'PORT': '',
     }
 }
 
@@ -129,7 +124,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+STATIC_ROOT = os.path.join(BASE_DIR, "media-files", "static-root")
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
@@ -138,4 +133,4 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media-files", "media-root")
