@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # set TRUE for deployment
+DEBUG = False  # set TRUE for deployment
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -82,10 +82,16 @@ WSGI_APPLICATION = 'appliances.wsgi.application'
 DATABASES = {'default': {}}
 
 if DEBUG:
-    import dj_database_url
-
-    db_from_env = dj_database_url.config()
-    DATABASES['default'].update(db_from_env)
+    DATABASES['default'].update(
+        {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'appliances',
+            'USER': os.environ['DATABASE_USER'],
+            'PASSWORD': os.environ['DATABASE_PASSWORD'],
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    )
 else:
     import dj_database_url
     db_from_env = dj_database_url.config()
