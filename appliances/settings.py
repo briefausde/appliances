@@ -23,12 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'demo-appliances.herokuapp.com',
-    'localhost']
+    'localhost'
+]
 
 
 # Application definition
@@ -81,9 +82,6 @@ WSGI_APPLICATION = 'appliances.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'appliances',
-        'HOST': 'localhost',
-        'PORT': '',
     }
 }
 
@@ -140,3 +138,4 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media-files", "media-root")
+
