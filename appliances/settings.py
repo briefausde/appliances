@@ -23,9 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # invert this for deployment
+DEBUG = False  # set TRUE for deployment
 
-ALLOWED_HOSTS = ['127.0.0.1', 'demo-appliances.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'demo-appliances.herokuapp.com',
+    'localhost'
+]
 
 
 # Application definition
@@ -75,16 +79,19 @@ WSGI_APPLICATION = 'appliances.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'appliances',
-        'USER': os.environ['DATABASE_USER'],
-        'PASSWORD': os.environ['DATABASE_PASSWORD'],
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+DATABASES = {'default': {}}
+
+if DEBUG:
+    DATABASES['default'].update(
+        {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'appliances',
+            'USER': os.environ['DATABASE_USER'],
+            'PASSWORD': os.environ['DATABASE_PASSWORD'],
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    )
 
 if not DEBUG:
     import dj_database_url
