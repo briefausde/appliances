@@ -81,21 +81,10 @@ WSGI_APPLICATION = 'appliances.wsgi.application'
 
 DATABASES = {'default': {}}
 
-if DEBUG:
-    DATABASES['default'].update(
-        {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'appliances',
-            'USER': os.environ['DATABASE_USER'],
-            'PASSWORD': os.environ['DATABASE_PASSWORD'],
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    )
-else:
-    import dj_database_url
-    db_from_env = dj_database_url.config()
-    DATABASES['default'].update(db_from_env)
+
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
